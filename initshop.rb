@@ -1,4 +1,4 @@
-#INCLUDE CLASSES
+#INCLUDE CLASSES - Arcade Store
 class Initshop
 require './store.rb'
 require './location.rb'
