@@ -1,0 +1,17 @@
+---
+'1': !ruby/object:Location
+  id: 1
+  name: The Cabinet Farm
+  city: Toroto
+  product_list:
+    2: 30
+'2': !ruby/object:Location
+  id: 2
+  name: Classic Retro Works
+  city: New York
+  product_list: {}
+'3': !ruby/object:Location
+  id: 3
+  name: Gamerama and Phone repair
+  city: Calgary
+  product_list: {}
