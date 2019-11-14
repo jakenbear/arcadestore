@@ -1,9 +1,0 @@
----
-'1': !ruby/object:Store
-  id: 1
-  name: JAKE'S ARCADE GAMES AND STUFF
-  description: Your number 1 source for classic video game machines.
-  location_list:
-  - '1'
-  - '2'
-  - '3'
