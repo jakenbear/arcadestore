@@ -10,75 +10,107 @@ attr_accessor :id,:name,:description,:location_list
     puts "NEW STORE CREATED: #{@name}, #{@description}"
   end
 
+  #Print string!
   def to_s
     "Store Information: #{@id}, #{@name}, #{@description}, #{@location_list}"
   end
 
+  #Display Info! - Simple
   def display_info
     puts "\n=======STORE INFO==========="
     puts "Store ID: #{@id}"
     puts "Store Name: #{@name}"
     puts "Description: #{@description}"
-    puts print_location_list()
+    puts "Location List: #{@location_list}"
   end
 
+  #Display Info! - Detailed Breakdown
+  def display_info_detailed(locations,products)
+    puts "\n=======STORE INFO==========="
+    puts "Store ID: #{@id}"
+    puts "Store Name: #{@name}"
+    puts "Description: #{@description}"
+    puts "Location List: #{@location_list}"
+    #Detailed Breakdown
+    show_store_inventory(locations,products)
+  end
+
+  #DATABASE: Add Location!
   def add_location(id)
-    @location_list.push id.to_s
-    #puts "Added Location ID: #{id.id}, #{id.name} to #{@name}"
+    found = @location_list.include?(id.to_s)
+      if found == true
+        puts "Location #{id} already associated with store."
+      else
+        @location_list.push id.to_s
+        puts "Location #{id} added to store."
+      end
   end
 
-  def remove_location(location)
-    #THIS WILL ONLY ALLOW YOU TO REMOVE A LOCATION IF LOCATION HAS NO STOCK
-    items = 0 #start at 0
-    for item in location.product_list
-      items += item[1] #add to item totals
-    end
-
-    if items == 0
-      @location_list.delete_if {|obj| obj.id == location.id}
-      puts "REMOVED LOCATION ID: #{location.id}, #{location.name} From #{@name}"
+  #DATABASE: Remove Location!
+  def remove_location(id)
+    i = @location_list.find_index(id.to_s)
+    if i == nil
+      i = "Location Id: #{id} is not associated with this Store!"
     else
-      puts "ERROR: Please transfer all inventory from #{location.name} before removing from #{@name}!"
+      @location_list.delete_at(i)
+      puts "Removed Location Id: #{id} from Store!"
     end
   end
 
-  def purge_location(location)
-    #THIS WILL PURGE LOCATION REGARDLESS OF INVENTORY
-    @location_list.delete_if {|obj| obj.id == location.id}
-    puts "PURGED LOCATION ID: #{location.id}, #{location.name} From #{@name}"
-  end
-
-  def get_product_qauntity(id)
-    qty = 0
-    for item in @location_list
-      plist = item.product_list
-      if plist[id] != nil
-        qty += plist[id]
+  #Database: Show Store inventory  -- all
+  def show_store_inventory(locations,products)
+    #Loop through Stores Location Id List
+    puts "====== STORE INVENTORY CHECK ========"
+    ind = 0
+    for locid in @location_list
+      prod_list = locations[ind][1].product_list
+      prod_list.each do | product_id, quantity |
+        pquery = Utils::product_name_query(product_id,products)
+        pname = pquery[0]
+        price = pquery[1]
+        puts "Location: #{locid}, Product Id: #{product_id}, Product Name: #{pname}, Price: $#{price}, Quantity: #{quantity}"
       end
-    end
-
-    return qty
+        ind += 1 #update index
+    end #for
   end
 
-  def display_all_inventory
-    for item in @location_list
-      plist = item.product_list
-      plist.each do |key, value|
-        puts "#{item.name}, Product Id: #{key}, QTY: #{value}"
+  #Database: Show Store inventory  -- One ITEM
+  def show_store_inventory_item(locations,products,itemid)
+    #Loop through Stores Location Id List
+    puts "====== STORE INVENTORY CHECK ===Id: #{itemid}====="
+    ind = 0
+    for locid in @location_list
+      prod_list = locations[ind][1].product_list
+      prod_list.each do | product_id, quantity |
+        pquery = Utils::product_name_query(product_id,products)
+        pname = pquery[0]
+        price = pquery[1]
+        if (itemid == product_id)
+          puts "Location: #{locid}, Product Id: #{product_id}, Product Name: #{pname}, Price: $#{price}, Quantity: #{quantity}"
+        end
       end
-    end
+        ind += 1 #update index
+    end #for
   end
 
-  def print_location_list
-    puts "\n=======LOCATION INFO==========="
-    for item in @location_list
-      puts "-----------------------"
-      puts "Location Id: #{item.id}"
-      puts "Location Name: #{item.name}"
-      puts "Location City: #{item.city}"
-      puts "Product List: #{item.product_list}"
+  #Database: Transfer a Product from Location A to Location B
+  def transfer_product(qty,id,from_loc,to_loc)
+    from_stock = from_loc.get_qauntity(id)
+    to_stock = to_loc.get_qauntity(id)
+    puts "Action: Transfer #{qty} Product Id: #{id}"
+    puts "From Location: #{from_loc}, #{from_stock} IN Stock."
+    puts "  To Location: #{to_loc}, #{to_stock} IN Stock."
+    #Check if transfer possible
+    if (from_stock >= qty)
+      rmv = from_loc.remove_product(id,qty)
+      if rmv == 99
+        puts "REMOVED #{qty} ITEMS - (ID:#{id}) from #{from_loc.name}"
+      end
+      to_loc.add_product(id,qty)
+      puts "SENT #{qty} ITEMS - (ID:#{id}) to #{to_loc.name}"
+    else
+      puts "ERROR: Tried to transfer more items than you have!"
     end
-    puts "-----------------------"
   end
 
   #Transfer a product from location to location
@@ -99,20 +131,4 @@ attr_accessor :id,:name,:description,:location_list
     end
   end
 
-  #Helper functions
-  def show_global_item_total_in_store(store,prod)
-    puts "TOTAL STOCK (All locations): #{prod.name}: #{store.get_product_qauntity(prod.id)} UNITS"
-  end
-
-  def get_global_item_total_in_store(store,prod)
-      return store.get_product_qauntity(prod.id)
-  end
-
-  def show_global_item_total_in_location(location,prod)
-    puts "#{location.name} - (ID:#{prod.id} - #{prod.name}) : #{location.get_local_qauntity(prod.id)} UNITS"
-  end
-
-  def get_global_item_total_in_location(location,prod)
-    return location.get_local_qauntity(prod.id)
-  end
 end #end SHOP class

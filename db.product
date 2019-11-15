@@ -1,0 +1,31 @@
+---
+'1': !ruby/object:Product
+  id: 1
+  name: BURGER TIME
+  price: 250
+  description: Match the hamburgers to save the world.
+'2': !ruby/object:Product
+  id: 2
+  name: GALAGA
+  price: 375
+  description: Space Aliens are coming for you.
+'3': !ruby/object:Product
+  id: 3
+  name: PAPER BOY
+  price: 425
+  description: Deliver all of the newspapers
+'4': !ruby/object:Product
+  id: 4
+  name: DIG DUG
+  price: 300
+  description: The classic digging classic.
+'5': !ruby/object:Product
+  id: 5
+  name: DONKEY KONG
+  price: 750
+  description: Can you reach the top?
+'6': !ruby/object:Product
+  id: 6
+  name: NINTENDO ICE HOCKEY
+  price: 500
+  description: Intense on ice action.

@@ -86,4 +86,18 @@ def self.fancy_locations_print(lc)
   end
 end
 
+#PRODUCT NAME QUERY TOOL
+def self.product_name_query(id,product_list)
+  pname = ""
+  price = ""
+    product_list.each do |item|
+      pid = item[1].id
+      if pid == id
+        pname = item[1].name
+        price = item[1].price
+      end
+    end
+  return [pname,price]
+end
+
 end #class

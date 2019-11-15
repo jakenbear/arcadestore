@@ -23,10 +23,11 @@ prod2 = Product.new(2,"GALAGA",375,"Space Aliens are coming for you.")
 prod3 = Product.new(3,"PAPER BOY",425,"Deliver all of the newspapers")
 prod4 = Product.new(4,"DIG DUG",300,"The classic digging classic.")
 prod5 = Product.new(5,"DONKEY KONG",750,"Can you reach the top?")
+prod6 = Product.new(6,"NINTENDO ICE HOCKEY",500,"Intense on ice action.")
 
-store.add_location(location1.id)
-store.add_location(location2.id)
-store.add_location(location3.id)
+#store.add_location(location1.id)
+#store.add_location(location2.id)
+#store.add_location(location3.id)
 
 #STORE DB WRITE
 storedb.transaction do
@@ -47,6 +48,8 @@ productdb.transaction do
   productdb["#{prod3.id}"] = prod3
   productdb["#{prod4.id}"] = prod4
   productdb["#{prod5.id}"] = prod5
+  productdb["#{prod6.id}"] = prod6
+
 end
 
 end #Init shop
