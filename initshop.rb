@@ -25,9 +25,17 @@ prod4 = Product.new(4,"DIG DUG",300,"The classic digging classic.")
 prod5 = Product.new(5,"DONKEY KONG",750,"Can you reach the top?")
 prod6 = Product.new(6,"NINTENDO ICE HOCKEY",500,"Intense on ice action.")
 
-#store.add_location(location1.id)
-#store.add_location(location2.id)
-#store.add_location(location3.id)
+store.add_location(location1.id)
+store.add_location(location2.id)
+store.add_location(location3.id)
+
+location1.add_product(1,8)
+location1.add_product(2,10)
+location2.add_product(2,7)
+location2.add_product(3,12)
+location2.add_product(4,20)
+location3.add_product(5,2)
+location3.add_product(6,3)
 
 #STORE DB WRITE
 storedb.transaction do

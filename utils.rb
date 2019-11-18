@@ -4,20 +4,20 @@ def self.load_store_database(stores,products,locations)
   YAML.load_file('db.store').each do |entry|
     stores.push entry
   end
-  puts "#{stores.size} STORE LOADED!"
+  #puts "#{stores.size} STORE LOADED!"
 
   #Load products
   YAML.load_file('db.product').each do |entry|
     products.push entry
   end
-  puts "#{products.size} PRODUCTS LOADED!"
+  #puts "#{products.size} PRODUCTS LOADED!"
 
   #Load LOCATIONS
 
   YAML.load_file('db.location').each do |entry|
     locations.push entry
   end
-  puts "#{locations.size} LOCATIONS LOADED!"
+  #puts "#{locations.size} LOCATIONS LOADED!"
 
 end #store loads
 
