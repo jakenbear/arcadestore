@@ -19,6 +19,15 @@ locations = []
 #Load store from database files
 Utils::load_store_database(stores,products,locations)
 
+def fancy_print(msg,mode)
+  if mode == 0
+    topper = Artii::Base.new 
+  else
+    topper = Artii::Base.new :font => 'slant'
+  end
+  puts topper.asciify(msg)
+end
+
 #Print out Store information
 def print_out_stores(s,p,l)
   Utils::fancy_store_print(s)
@@ -38,16 +47,12 @@ end
 
 #Print Operation 3
 def print_operations_pro(p)
-  puts ("===========================")
-  puts ("STORE Stock - Product Info")
-  puts ("===========================")
+  fancy_print('PRODUCTS',0)
   Utils::print_db(p)
 end
 
 def print_operations_loc(l)
-  puts ("===========================")
-  puts ("STORE Location Info")
-  puts ("===========================")
+  fancy_print('LOCATION INFO',1)
   Utils::print_db(l)
 end
 
